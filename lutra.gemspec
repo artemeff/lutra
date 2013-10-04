@@ -10,11 +10,11 @@ Gem::Specification.new do |s|
   s.homepage = "http://github.com/artemeff/lutra"
   s.summary = %q{In source annotaions parser}
   s.description = %q{Parse tags (todo, fixme, optimize) in your source code}
+  s.licenses = ['MIT']
 
   s.files = %w(README.md LICENSE lutra.gemspec)
   s.files += Dir.glob("lib/**/*.rb")
   s.files += Dir.glob("spec/**/*")
-  s.licenses = ['MIT']
   s.require_paths = ['lib']
   s.test_files = Dir.glob("spec/**/*")
 

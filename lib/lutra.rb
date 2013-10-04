@@ -11,4 +11,5 @@ module Lutra
   # errors
   class NotImplementedError < Exception; end
   class EmptyTagListError < Exception; end
+  class EmptyCommentListError < Exception; end
 end

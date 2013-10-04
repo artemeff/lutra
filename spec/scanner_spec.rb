@@ -9,7 +9,15 @@ describe Lutra::Scanner do
     end
 
     it "with custom tags" do
-      expect(subject.new(['X']).tags).to eq ['X']
+      expect(subject.new(tags: ['X']).tags).to eq ['X']
+    end
+
+    it "with default comments" do
+      expect(subject.new.comments).to eq ["#", "%", ";", "//", "--"]
+    end
+
+    it "with custom comments" do
+      expect(subject.new(comments: ['#']).comments).to eq ["#"]
     end
   end
 

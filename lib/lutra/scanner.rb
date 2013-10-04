@@ -1,21 +1,21 @@
 module Lutra
   class Scanner
-    attr_accessor :tags
+    attr_accessor :tags, :comments
     attr_reader :notes
 
-    def initialize(tags = nil, comments = nil)
-      @tags = tags || TAGS.dup
-      @comments = comments || COMM.dup
+    def initialize(options = {})
+      @tags = options[:tags] || TAGS.dup
+      @comments = options[:comments] || COMM.dup
       @notes = []
     end
 
     def scan(source)
-      check_tags
+      check_tags and check_comments
       extract(source.split("\n")) and self
     end
 
     def scan_file(path)
-      check_tags
+      check_tags and check_comments
       extract(File.open(path), path) and self
     end
 
@@ -33,6 +33,10 @@ module Lutra
 
     def check_tags
       raise EmptyTagListError if @tags.empty?
+    end
+
+    def check_comments
+      raise EmptyCommentListError if @comments.empty?
     end
 
     def regexp

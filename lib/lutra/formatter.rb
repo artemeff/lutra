@@ -1,7 +1,7 @@
 module Lutra
   class Formatter
-    def initialize(tags)
-      @tags = tags
+    def initialize(notes)
+      @notes = notes
     end
 
     def print

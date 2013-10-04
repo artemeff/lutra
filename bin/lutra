@@ -1,4 +1,55 @@
 #!/usr/bin/env ruby
 require 'optparse'
+require 'find'
 require 'lutra'
 
+verbose   = false
+formatter = 'default'
+color     = STDOUT.tty?
+usage     = 'Usage: lutra [OPTIONS] [FILES | PATH]'
+tags      = Lutra::TAGS.dup
+
+ARGV.options do |o|
+  o.version = Lutra::VERSION
+  o.banner = usage
+  o.on('-t', '--tag=TAG',    'Search for TAG tags')    { |tag| tags |= [tag] }
+  o.on('-f', '--formatter',  'Use your own formatter') { |name| formatter = name }
+  o.on('-v', '--verbose',    'Verbose output')         { verbose = true }
+end
+
+begin
+  ARGV.options.parse!
+  if ARGV.empty?
+    paths = '.'
+  else
+    paths = ARGV.map { |p| File.exist? p or raise Errno::ENOENT, p ; p }
+  end
+rescue => e
+  STDERR.puts "notes: #{e.message}"
+  STDERR.puts usage
+  STDERR.puts "Try `notes --help' for more information."
+  exit 1
+end
+
+scanner = Lutra::Scanner.new(tags)
+
+Find.find(*paths) do |path|
+  unless paths.include?(path)
+    Find.prune if File.basename(path).start_with?('.')
+  end
+
+  next if File.directory?(path)
+
+  begin
+    scanner.scan_file(path)
+  rescue Errno::ENOENT => e
+    STDERR.puts "lutra: #{e.message} (broken symlink?)" if verbose
+  rescue => e
+    STDERR.puts "lutra: #{path}: #{e.message}" if verbose
+  end
+end
+
+# TODO formatter
+# puts scanner.notes.map(&:source).join("\n")
+
+exit

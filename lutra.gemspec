@@ -18,5 +18,5 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
   s.test_files = Dir.glob("spec/**/*")
 
-  spec.executables << 'notes'
+  spec.executables << 'lutra'
 end

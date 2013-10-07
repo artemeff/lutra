@@ -1,6 +1,7 @@
 require 'lutra/note'
 require 'lutra/scanner'
 require 'lutra/formatter'
+require 'lutra/formatters/base'
 require 'lutra/formatters/default'
 require 'lutra/version'
 
@@ -12,4 +13,5 @@ module Lutra
   class NotImplementedError < Exception; end
   class EmptyTagListError < Exception; end
   class EmptyCommentListError < Exception; end
+  class FormatterNotFound < Exception; end
 end

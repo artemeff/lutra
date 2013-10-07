@@ -1,9 +1,7 @@
 require 'spec_helper'
 
-describe Lutra::DefaultFormatter do
+describe Lutra::Formatters::Default do
   subject { described_class }
 
-  it "works" do
-    # ...
-  end
+  it "#prepare"
 end

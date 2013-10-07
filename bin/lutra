@@ -3,20 +3,31 @@ require 'optparse'
 require 'find'
 require 'lutra'
 
-verbose   = false
-formatter = 'default'
-color     = STDOUT.tty?
-usage     = 'Usage: lutra [OPTIONS] [PATH]'
-tags      = Lutra::TAGS.dup
-comments  = Lutra::COMM.dup
+verbose  = false
+color    = STDOUT.tty?
+usage    = 'Usage: lutra [OPTIONS] [PATH]'
+tags     = Lutra::TAGS.dup
+comments = Lutra::COMM.dup
+formatter_name = :default
 
 ARGV.options do |o|
   o.version = Lutra::VERSION
   o.banner = usage
-  o.on('-t', '--tags=TAG',       'Search for custom tags') { |tag| tags |= [tag] }
-  o.on('-c', '--comments=COM',   'Specify comment lines')  { |com| comments |= [com] }
-  o.on('-f', '--formatter=NAME', 'Use your own formatter') { |name| formatter = name }
-  o.on('-v', '--verbose',        'Verbose output')         { verbose = true }
+  o.on('-t', '--tags=TAG', 'Search for custom tags') do |tag|
+    tags |= [tag]
+  end
+
+  o.on('-c', '--comments=COM', 'Specify comment lines') do |com|
+    comments |= [com]
+  end
+
+  o.on('-f', '--formatter=NAME', 'Use your own formatter') do |name|
+    formatter_name = name.to_sym
+  end
+
+  o.on('-v', '--verbose', 'Verbose output') do
+    verbose = true
+  end
 end
 
 begin
@@ -51,7 +62,9 @@ Find.find(*paths) do |path|
   end
 end
 
-# TODO formatter
-# puts scanner.notes.map(&:source).join("\n")
+formatter = Lutra::Formatter.new
+formatter.set(formatter_name)
+
+puts formatter.prepare(scanner.notes)
 
 exit

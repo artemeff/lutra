@@ -1,7 +1,9 @@
 module Lutra
-  class DefaultFormatter < Lutra::Formatter
-    def print
-      @tags
+  module Formatters
+    class Default < Lutra::Formatters::Base
+      def prepare
+        @notes.map(&:source)
+      end
     end
   end
 end

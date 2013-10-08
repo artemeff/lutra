@@ -1,4 +1,4 @@
-### lutra [![Gem version](https://badge.fury.io/rb/lutra.png)](https://rubygems.org/gems/lutra) [![Build Status](https://secure.travis-ci.org/artemeff/lutra.png)](https://travis-ci.org/artemeff/lutra) [![Code Climate](https://codeclimate.com/github/artemeff/lutra.png)](https://codeclimate.com/github/artemeff/lutra)
+### lutra [![Gem version](https://badge.fury.io/rb/lutra.png)](https://rubygems.org/gems/lutra) [![Build Status](https://secure.travis-ci.org/artemeff/lutra.png)](https://travis-ci.org/artemeff/lutra) [![Code Climate](https://codeclimate.com/github/artemeff/lutra.png)](https://codeclimate.com/github/artemeff/lutra) [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/artemeff/lutra/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 ---
 
@@ -37,7 +37,3 @@ Usage: lutra [OPTIONS] [PATH]
 3. Commit your changes (`git commit -am 'add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/artemeff/lutra/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-

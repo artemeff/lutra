@@ -37,3 +37,7 @@ Usage: lutra [OPTIONS] [PATH]
 3. Commit your changes (`git commit -am 'add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/artemeff/lutra/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+

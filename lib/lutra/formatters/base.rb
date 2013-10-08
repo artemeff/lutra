@@ -1,11 +1,11 @@
 module Lutra
   module Formatters
     class Base
-      def initialize(notes)
-        @notes = notes
+      def initialize(options = {})
+        @options = options
       end
 
-      def prepare
+      def display(notes)
         raise NotImplementedError
       end
     end

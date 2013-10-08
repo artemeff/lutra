@@ -5,7 +5,7 @@ describe Lutra::Formatters::Base do
 
   it ".new raise exception" do
     expect {
-      subject.new([]).prepare
+      subject.new.display([])
     }.to raise_error(Lutra::NotImplementedError)
   end
 end

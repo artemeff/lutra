@@ -3,5 +3,5 @@ require 'spec_helper'
 describe Lutra::Formatters::Default do
   subject { described_class }
 
-  it "#prepare"
+  it "#display"
 end

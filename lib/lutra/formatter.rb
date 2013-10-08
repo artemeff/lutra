@@ -2,7 +2,8 @@ module Lutra
   class Formatter
     attr_reader :formatters, :current
 
-    def initialize
+    def initialize(options = {})
+      @options = options
       @current = :default
       @formatters = [
         { name: :default, short: :d, class: Lutra::Formatters::Default }
@@ -29,14 +30,14 @@ module Lutra
       end
     end
 
-    def prepare(notes)
-      get(@current)[:class].new(notes).prepare
+    def display(notes)
+      get(@current)[:class].new(@options).display(notes)
     end
 
   private
 
     def formatter?(class_name)
-      class_name.new([]).respond_to?(:prepare)
+      class_name.new.respond_to?(:prepare)
     end
   end
 end

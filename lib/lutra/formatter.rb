@@ -3,7 +3,7 @@ module Lutra
     attr_reader :formatters, :current
 
     def initialize(options = {})
-      @options = options
+      @options = default_options.merge(options)
       @current = :default
       @formatters = [
         { name: :default, short: :d, class: Lutra::Formatters::Default }
@@ -38,6 +38,13 @@ module Lutra
 
     def formatter?(class_name)
       class_name.new.respond_to?(:prepare)
+    end
+
+    def default_options
+      {
+        display_tags: true,
+        text_size: 55
+      }
     end
   end
 end

@@ -24,6 +24,7 @@ Usage: lutra [OPTIONS] [PATH]
     -c, --comments=COM               Specify comment lines
     -f, --formatter=NAME             Use your own formatter
     -v, --verbose                    Verbose output
+        --hide-tags                  Hide tags
 ```
 
 ---

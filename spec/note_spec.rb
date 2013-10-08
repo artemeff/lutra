@@ -2,16 +2,11 @@ require 'spec_helper'
 
 describe Lutra::Note do
   subject do
-    raw = { tag: 'X', source: 'X text', line: 1, file: 'ex.rb' }
-    described_class.new(raw)
+    described_class.new('X', 'text', 1, 'ex.rb')
   end
 
   it "#tag" do
     expect(subject.tag).to eq 'X'
-  end
-
-  it "#source" do
-    expect(subject.source).to eq 'X text'
   end
 
   it "#line" do

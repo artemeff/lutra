@@ -24,9 +24,8 @@ module Lutra
     def extract(source, path = nil)
       rxp = regexp
       source.each_with_index do |line, i|
-        if rxp =~ line
-          raw = { tag: $1, source: line, line: i + 1, file: path }
-          @notes << Note.new(raw)
+        if r = rxp.match(line)
+          @notes << Note.new(r[:tag], r[:text], i + 1, path)
         end
       end
     end
@@ -40,7 +39,7 @@ module Lutra
     end
 
     def regexp
-      /(#{@comments.join('|')})\s*(?<tag>#{@tags.join('|')})\s*(?<text>.*)/
+      /(#{@comments.join('|')})\s*(?<tag>#{@tags.join('|')})[\s|\:]*(?<text>.*)/
     end
   end
 end

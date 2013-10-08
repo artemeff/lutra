@@ -8,8 +8,8 @@ color    = STDOUT.tty?
 usage    = 'Usage: lutra [OPTIONS] [PATH]'
 tags     = Lutra::TAGS.dup
 comments = Lutra::COMM.dup
-display_tags = true
 formatter_name = :default
+formatter_opts = {}
 
 ARGV.options do |o|
   o.version = Lutra::VERSION
@@ -26,12 +26,16 @@ ARGV.options do |o|
     formatter_name = name.to_sym
   end
 
+  o.on('-s', '--text-size=SIZE', 'Set text size for formatter') do |size|
+    formatter_opts[:text_size] = size.to_i
+  end
+
   o.on('-v', '--verbose', 'Verbose output') do
     verbose = true
   end
 
   o.on('--hide-tags', 'Hide tags') do
-    display_tags = false
+    formatter_opts[:display_tags] = false
   end
 end
 
@@ -67,7 +71,7 @@ Find.find(*paths) do |path|
   end
 end
 
-formatter = Lutra::Formatter.new(display_tags: display_tags)
+formatter = Lutra::Formatter.new(formatter_opts)
 formatter.set(formatter_name)
 formatter.display(scanner.notes)
 

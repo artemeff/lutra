@@ -23,6 +23,7 @@ Usage: lutra [OPTIONS] [PATH]
     -t, --tags=TAG                   Search for custom tags
     -c, --comments=COM               Specify comment lines
     -f, --formatter=NAME             Use your own formatter
+    -s, --text-size=SIZE             Set text size for formatter
     -v, --verbose                    Verbose output
         --hide-tags                  Hide tags
 ```

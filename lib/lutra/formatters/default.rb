@@ -5,7 +5,7 @@ module Lutra
         indent = notes.map(&:line).flatten.max.to_s.size
 
         notes.group_by { |n| n.file }.each do |file, notes|
-          puts "#{file[2..-1]}:"
+          puts "#{format_path(file)}:"
           notes.each do |note|
             puts " * #{prepare(note, indent)}"
           end
@@ -19,6 +19,12 @@ module Lutra
         s << note[:text][0..@options[:text_size]].strip.chomp
         s << "..." if note[:text].size > @options[:text_size]
         s
+      end
+
+    private
+
+      def format_path(file)
+        file.gsub('../', '').gsub('./', '')
       end
     end
   end

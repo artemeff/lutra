@@ -1,5 +1,3 @@
 module Lutra
-  class Note < Struct.new(:tag, :text, :line, :file)
-    # ...
-  end
+  Note = Struct.new(:tag, :text, :line, :file)
 end

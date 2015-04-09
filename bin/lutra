@@ -6,20 +6,21 @@ require 'lutra'
 verbose  = false
 color    = STDOUT.tty?
 usage    = 'Usage: lutra [OPTIONS] [PATH]'
-tags     = Lutra::TAGS.dup
-comments = Lutra::COMM.dup
+tags     = Lutra::TAGS
+comments = Lutra::COMM
 formatter_name = :default
 formatter_opts = {}
 
 ARGV.options do |o|
   o.version = Lutra::VERSION
   o.banner = usage
+
   o.on('-t', '--tags=TAG', 'Search for custom tags') do |tag|
-    tags |= [tag]
+    tags = tag.split(',').map(&:strip)
   end
 
   o.on('-c', '--comments=COM', 'Specify comment lines') do |com|
-    comments |= [com]
+    comments = com.split(',').map(&:strip)
   end
 
   o.on('-f', '--formatter=NAME', 'Use your own formatter') do |name|
@@ -41,19 +42,19 @@ end
 
 begin
   ARGV.options.parse!
-  if ARGV.empty?
-    paths = '.'
+  paths = if ARGV.empty?
+    '.'
   else
-    paths = ARGV.map { |p| File.exist? p or raise Errno::ENOENT, p ; p }
+    ARGV.select { |path| File.exist?(path) }
   end
 rescue => e
-  STDERR.puts "lutra: #{e.message}"
+  STDERR.puts "Error: #{e.message}"
   STDERR.puts usage
   STDERR.puts "Try 'lutra --help' for more information"
   exit 1
 end
 
-scanner = Lutra::Scanner.new(tags: tags, comments: comments)
+scanner = Lutra::Scanner.new(tags, comments)
 
 Find.find(*paths) do |path|
   unless paths.include?(path)

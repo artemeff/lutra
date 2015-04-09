@@ -3,25 +3,21 @@ module Lutra
     attr_accessor :tags, :comments
     attr_reader :notes
 
-    def initialize(options = {})
-      @tags = options[:tags] || TAGS.dup
-      @comments = options[:comments] || COMM.dup
-      @notes = []
-    end
+    def initialize(tags = nil, comments = nil)
+      @tags     = tags || Lutra::TAGS
+      @comments = comments || Lutra::COMM
+      @notes    = []
 
-    def scan(source)
       check_tags and check_comments
-      extract(source.split("\n")) and self
     end
 
     def scan_file(path)
-      check_tags and check_comments
-      extract(File.open(path), path) and self
+      extract(File.open(path), path)
     end
 
   private
 
-    def extract(source, path = nil)
+    def extract(source, path)
       rxp = regexp
       source.each_with_index do |line, i|
         if r = rxp.match(line)

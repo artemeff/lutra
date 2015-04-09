@@ -9,7 +9,7 @@ describe Lutra::Scanner do
     end
 
     it "with custom tags" do
-      expect(subject.new(tags: ['X']).tags).to eq ['X']
+      expect(subject.new(['X']).tags).to eq ['X']
     end
 
     it "with default comments" do
@@ -17,29 +17,19 @@ describe Lutra::Scanner do
     end
 
     it "with custom comments" do
-      expect(subject.new(comments: ['#']).comments).to eq ["#"]
+      expect(subject.new(['X'], ['#']).comments).to eq ["#"]
     end
   end
 
   context "#scan_file" do
     let(:notes) do
-      subject.new.scan_file("#{File.dirname(__FILE__)}/example").notes
+      scanner = subject.new
+      scanner.scan_file("#{File.dirname(__FILE__)}/example")
+      scanner.notes
     end
 
     it "have todo, fixme and optimize" do
       expect(notes.map(&:tag)).to eq ['TODO', 'FIXME', 'OPTIMIZE']
-    end
-  end
-
-  context "#scan" do
-    let(:notes) { subject.new.scan(example_data).notes }
-
-    it "have todo, fixme and optimize" do
-      expect(notes.map(&:tag)).to eq ['TODO', 'FIXME', 'OPTIMIZE']
-    end
-
-    it "have only 3 items" do
-      expect(notes.size).to eq 3
     end
   end
 end

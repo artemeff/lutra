@@ -1,4 +1,4 @@
-### lutra [![Gem version](https://badge.fury.io/rb/lutra.png)](https://rubygems.org/gems/lutra) [![Build Status](https://secure.travis-ci.org/artemeff/lutra.png)](https://travis-ci.org/artemeff/lutra) [![Code Climate](https://codeclimate.com/github/artemeff/lutra.png)](https://codeclimate.com/github/artemeff/lutra)
+### lutra [![Gem version](https://img.shields.io/gem/v/lutra.svg)](https://rubygems.org/gems/lutra) [![Build Status](https://img.shields.io/travis/artemeff/lutra.svg)](https://travis-ci.org/artemeff/lutra) [![Code Climate](https://img.shields.io/codeclimate/github/artemeff/lutra.svg)](https://codeclimate.com/github/artemeff/lutra)
 
 ---
 

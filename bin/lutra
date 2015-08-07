@@ -2,12 +2,13 @@
 require 'optparse'
 require 'find'
 require 'lutra'
+require 'lutra/version'
 
 verbose  = false
 color    = STDOUT.tty?
 usage    = 'Usage: lutra [OPTIONS] [PATH]'
 tags     = Lutra::TAGS
-comments = Lutra::COMM
+comments = Lutra::COMMENTS
 formatter_name = :default
 formatter_opts = {}
 
@@ -54,7 +55,7 @@ rescue => e
   exit 1
 end
 
-scanner = Lutra::Scanner.new(tags, comments)
+scanner = Lutra::Scanner.new(tags: tags, comments: comments)
 
 Find.find(*paths) do |path|
   unless paths.include?(path)

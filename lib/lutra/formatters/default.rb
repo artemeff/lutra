@@ -14,10 +14,10 @@ module Lutra
       end
 
       def prepare(note, indent)
-        s =  "[#{note[:line].to_s.rjust(indent)}] "
-        s << "[#{note[:tag]}] " if @options[:display_tags]
-        s << note[:text][0..@options[:text_size]].strip.chomp
-        s << "..." if note[:text].size > @options[:text_size]
+        s =  "[#{note.line.to_s.rjust(indent)}] "
+        s << "[#{note.tag}] " if options[:display_tags]
+        s << note.text[0..options[:text_size]].strip.chomp
+        s << '...' if note.text.size > options[:text_size]
         s
       end
 

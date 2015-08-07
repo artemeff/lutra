@@ -1,9 +1,20 @@
 language: ruby
+sudo: false
+cache: bundler
+script: "bundle exec rake spec"
 rvm:
-  - jruby-19mode
-  - rbx-19mode
-  - 1.9.2
-  - 1.9.3
-  - 2.0.0
-  - 2.1.0
-  - 2.2.1
+  - 2.0
+  - 2.1
+  - 2.2
+  - rbx-2
+  - jruby
+  - jruby-head
+  - ruby-head
+env:
+  global:
+    - CODECLIMATE_REPO_TOKEN=6bb862c16df79d9a10b373a4204f5e821cd6ef4cbde518d9392b9b9bfe7101b2
+    - JRUBY_OPTS='--dev -J-Xmx1024M'
+matrix:
+  allow_failures:
+    - rvm: ruby-head
+    - rvm: jruby-head

@@ -1,17 +1,14 @@
-require 'lutra/note'
 require 'lutra/scanner'
 require 'lutra/formatter'
 require 'lutra/formatters/base'
 require 'lutra/formatters/default'
-require 'lutra/version'
 
 module Lutra
   TAGS = %w[TODO FIXME OPTIMIZE]
-  COMM = %w[# % ; // --]
+  COMMENTS = %w[# % ; // --]
 
-  # errors
-  class NotImplementedError < Exception; end
-  class EmptyTagListError < Exception; end
-  class EmptyCommentListError < Exception; end
-  class FormatterNotFound < Exception; end
+  NotImplementedError = Class.new(StandardError)
+  EmptyTagListError = Class.new(StandardError)
+  EmptyCommentListError = Class.new(StandardError)
+  FormatterNotFound = Class.new(StandardError)
 end

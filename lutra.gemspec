@@ -19,7 +19,4 @@ Gem::Specification.new do |s|
   s.test_files = Dir.glob("spec/**/*")
 
   s.executables << 'lutra'
-
-  s.add_development_dependency 'rake'
-  s.add_development_dependency 'rspec', '>= 2.1'
 end

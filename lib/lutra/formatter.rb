@@ -1,19 +1,19 @@
+require 'lutra/formatter_entry'
+
 module Lutra
   class Formatter
     attr_reader :formatters, :current
 
     def initialize(options = {})
-      @options = default_options.merge(options)
+      @options = options
       @current = :default
-      @formatters = [
-        { name: :default, short: :d, class: Lutra::Formatters::Default }
-      ]
+      @formatters = [default_formatter]
     end
 
     def get(name)
-      @formatters.select do |f|
-        f[:name] == name || f[:short] == name
-      end.first
+      @formatters.find do |f|
+        f.name == name || f.short == name
+      end
     end
 
     def set(name)
@@ -26,25 +26,22 @@ module Lutra
 
     def add(name, short_name, class_name)
       if formatter?(class_name)
-        @formatters << { name: name, short: short_name, class: class_name }
+        @formatters << FormatterEntry.new(name, short_name, class_name)
       end
     end
 
     def display(notes)
-      get(@current)[:class].new(@options).display(notes)
+      get(@current).class_name.new(@options).display(notes)
     end
 
   private
 
     def formatter?(class_name)
-      class_name.new.respond_to?(:prepare)
+      class_name.new.respond_to?(:display)
     end
 
-    def default_options
-      {
-        display_tags: true,
-        text_size: 55
-      }
+    def default_formatter
+      FormatterEntry.new(:default, :d, Lutra::Formatters::Default)
     end
   end
 end

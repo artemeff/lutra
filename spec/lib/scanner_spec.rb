@@ -4,46 +4,36 @@ describe Lutra::Scanner do
   context '.new' do
     subject { described_class }
 
-    it 'default tags' do
-      expect(subject.new.tags).to eq(['TODO', 'FIXME', 'OPTIMIZE'])
-    end
-
-    it 'custom tags' do
-      expect(subject.new(tags: ['X']).tags).to eq(['X'])
-    end
-
-    it 'default comments' do
-      expect(subject.new.comments).to eq(['#', '%', ';', '//', '--'])
-    end
-
-    it 'custom comments' do
-      expect(subject.new(comments: ['#']).comments).to eq(['#'])
+    it 'default formatter' do
+      expect(subject.new.formatter).to be_a(Lutra::Formatters::Default)
     end
   end
 
-  context '#scan_file' do
-    let(:filename) { data_file('sample') }
-    let(:notes)    { subject.notes }
+  context '#extract' do
+    let(:path) { data_file('sample') }
+    let(:file) { File.open(path) }
+    let(:tags) { Lutra::TAGS }
+    let(:comm) { Lutra::COMMENTS }
 
-    before { subject.scan_file(filename) }
+    subject { described_class.new.send(:extract, file, path, tags, comm) }
 
     it 'have todo, fixme and optimize' do
-      expect(notes.map(&:tag)).to eq(['TODO', 'FIXME', 'OPTIMIZE'])
+      expect(subject.map(&:tag)).to eq(['TODO', 'FIXME', 'OPTIMIZE'])
     end
 
     context 'with custom tags' do
-      subject { described_class.new(tags: ['TODO']) }
+      let(:tags) { ['TODO'] }
 
       it 'returns notes with only specified tag' do
-        expect(notes.map(&:tag)).to eq(['TODO'])
+        expect(subject.map(&:tag)).to eq(['TODO'])
       end
     end
 
     context 'with custom comments' do
-      subject { described_class.new(comments: ['#']) }
+      let(:comm) { ['#'] }
 
       it 'returns notes with only specified comments' do
-        expect(notes.map(&:comment)).to eq(['#'])
+        expect(subject.map(&:comment)).to eq(['#'])
       end
     end
   end

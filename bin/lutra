@@ -9,7 +9,6 @@ color    = STDOUT.tty?
 usage    = 'Usage: lutra [OPTIONS] [PATH]'
 tags     = Lutra::TAGS
 comments = Lutra::COMMENTS
-formatter_name = :default
 formatter_opts = {}
 
 ARGV.options do |o|
@@ -22,10 +21,6 @@ ARGV.options do |o|
 
   o.on('-c', '--comments=COM', 'Specify comment lines') do |com|
     comments = com.split(',').map(&:strip)
-  end
-
-  o.on('-f', '--formatter=NAME', 'Use your own formatter') do |name|
-    formatter_name = name.to_sym
   end
 
   o.on('-s', '--text-size=SIZE', 'Set text size for formatter') do |size|
@@ -55,7 +50,8 @@ rescue => e
   exit 1
 end
 
-scanner = Lutra::Scanner.new(tags: tags, comments: comments)
+formatter = Lutra::Formatters::Default.new(formatter_opts)
+scanner = Lutra::Scanner.new(formatter)
 
 Find.find(*paths) do |path|
   unless paths.include?(path)
@@ -65,16 +61,12 @@ Find.find(*paths) do |path|
   next if File.directory?(path)
 
   begin
-    scanner.scan_file(path)
+    scanner.scan_file(path, tags, comments)
   rescue Errno::ENOENT => e
     STDERR.puts "lutra: #{e.message} (broken symlink?)" if verbose
   rescue => e
     STDERR.puts "lutra: #{path}: #{e.message}" if verbose
   end
 end
-
-formatter = Lutra::Formatter.new(formatter_opts)
-formatter.set(formatter_name)
-formatter.display(scanner.notes)
 
 exit
